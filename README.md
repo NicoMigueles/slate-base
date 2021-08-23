@@ -7,7 +7,7 @@ An easy dockerized environment to develop and build slate docs.
 To run the development environment use the following command
 
 ```shell
-docker run --rm --name slate -p 4567:4567 -v $(pwd)/source:/srv/slate/source slatedocs/slate serve
+docker run --rm --name slate -p 4567:4567 -v $(pwd -W)/source:/srv/slate/source slatedocs/slate serve
 ```
 
 This compiles the docs on save and serves the generated static web into http://localhost:4567

@@ -1,22 +1,18 @@
 ---
-title: Bytelog API
+title: SIMP2
 
-language_tabs: # must be one of https://git.io/vQNgJ
+language_tabs:
 
 - shell
-- javascript
+- php
 
 search: false
-
 code_clipboard: true
 ---
 
 # Introduction
 
-Welcome to the bytelog API! You can use our API to interact with your business events.
-
-We have language bindings in Shell, Ruby, Python, and JavaScript! You can view code examples in the dark area to the
-right, and you can switch the programming language of the examples with the tabs in the top right.
+Welcome to the SIMP2 Documentation
 
 # Authentication
 
@@ -25,21 +21,36 @@ right, and you can switch the programming language of the examples with the tabs
 ```shell
 # With shell, you can just pass the correct header with each request
 curl "https://staging.bytelog.io/api/v1/events" \
-  -H "Authorization: Bearer example_api_key"
+  -H "X-API-KEY: example_api_key"
 ```
 
 > Make sure to replace `example_api_key` with your API key.
 
-Bytelog uses API keys to allow access to the API. The api_key is provided to you by us.
+SIMP2 uses API keys to allow access to the API. The api_key is provided to you by us.
 
-Bytelog expects for the API key to be included in all API requests to the server in a header that looks like the
+The api key is expected to be included in all API requests in a header that looks like the
 following:
 
-`Authorization: Bearer example_api_key`
+`X-API-KEY: example_api_key`
 
-<aside class="notice">
-You must replace <code>example_api_key</code> with your personal API key.
-</aside>
+# Company transaction tokens
+
+> To query for a company, use this header:
+
+```shell
+# With shell, you can just pass the correct header with each request
+curl "https://staging.bytelog.io/api/v1/events" \
+  -H "X-API-KEY: example_api_key" \
+  -H "company-transaction-token: example_ctt"
+```
+
+> Make sure to replace `example_ctt` with a ctt that you want to represent.
+
+SIMP2 uses a token to identify what company is querying when you are using a payment method's api-key.
+
+
+`company-transaction-token: example_ctt`
+
 
 # Events
 
@@ -47,16 +58,7 @@ You must replace <code>example_api_key</code> with your personal API key.
 
 ```shell
 curl "https://staging.bytelog.io/api/v1/events" \
-  -H "Authorization: Bearer example_api_key"
-```
-
-```javascript
-const response = await fetch('https://staging.bytelog.io/api/v1/events', {
-    headers: {
-        Authorization: "Bearer example_api_key",
-    }
-});
-const { count, events } = await response.json();
+  -H "X-API-KEY: example_api_key"
 ```
 
 > The above command returns JSON structured like this:
@@ -105,28 +107,9 @@ end | false | If included, the result will contain events prior the end date. Fo
 ```shell
 curl "https://staging.bytelog.io/api/v1/events" \
   -X POST \
-  -H "Authorization: Bearer example_api_key" \
+  -H "X-API-KEY: example_api_key" \
   -H "Content-Type: application/json" \
   -d '{"id": 1,"name": "click","trace_id": "03775690","date": "2021-07-04 13:34:56","data": {"clicked_on": "sign up button"}'
-```
-
-```javascript
-const response = await fetch('https://staging.bytelog.io/api/v1/events', {
-    method: "POST",
-    headers: {
-        "Authorization": "Bearer example_api_key",
-        "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-        "id": 1,
-        "name": "click",
-        "trace_id": "03775690",
-        "data": {
-            "clicked_on": "sign up button"
-        }
-    })
-});
-
 ```
 
 > The above command returns 201 Created with and empty body.
@@ -171,17 +154,7 @@ data      | Any json data object you need
 
 ```shell
 curl "https://staging.bytelog.io/api/v1/events/trace/:trace_id" \
-  -H "Authorization: Bearer example_api_key"
-```
-
-```javascript
-const response = await fetch('https://staging.bytelog.io/api/v1/events/trace/:trace_id', {
-    headers: {
-        Authorization: "Bearer example_api_key",
-    }
-});
-const { count, events } = await response.json();
-
+  -H "X-API-KEY: example_api_key"
 ```
 
 > The above command returns JSON structured like this:
